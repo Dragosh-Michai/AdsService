@@ -1,0 +1,329 @@
+﻿<Page x:Class="AdsService.Pages.MyAdsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Мои объявления">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопки -->
+        <Border Grid.Row="0" 
+                Background="{StaticResource AccentBrush}" 
+                Margin="0,0,0,10"
+                Padding="20">
+            <StackPanel>
+                <TextBlock Text="Мои объявления" 
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Margin="0,0,0,15"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Button x:Name="AddButton" 
+                            Content="➕ Добавить объявление" 
+                            Click="AddButton_Click"
+                            Margin="0,0,10,0"
+                            Background="White"
+                            Foreground="{StaticResource AccentBrush}"
+                            BorderThickness="0"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Padding="15,10"
+                            Cursor="Hand">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="0.2" ShadowDepth="3"/>
+                        </Button.Effect>
+                    </Button>
+
+                    <Button x:Name="CompletedAdsButton" 
+                            Content="✅ Завершённые" 
+                            Click="CompletedAdsButton_Click"
+                            Margin="0,0,10,0"
+                            Background="White"
+                            Foreground="{StaticResource AccentBrush}"
+                            BorderThickness="0"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Padding="15,10"
+                            Cursor="Hand">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="0.2" ShadowDepth="3"/>
+                        </Button.Effect>
+                    </Button>
+
+                    <Button x:Name="BackButton" 
+                            Content="🔙 На главную" 
+                            Click="BackButton_Click"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="2"
+                            Foreground="White"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Padding="15,10"
+                            Cursor="Hand">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="0.2" ShadowDepth="3"/>
+                        </Button.Effect>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Список объявлений -->
+        <ScrollViewer Grid.Row="1" Margin="20">
+            <Border Background="White"
+                    CornerRadius="8"
+                    Padding="0"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- DataGrid с объявлениями -->
+                    <DataGrid x:Name="GridAds" 
+                              Grid.Row="0"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              GridLinesVisibility="None"
+                              BorderThickness="0"
+                              Background="White"
+                              HeadersVisibility="Column"
+                              RowHeight="50">
+                        <DataGrid.Columns>
+                            <!-- Название -->
+                            <DataGridTextColumn Header="Название" 
+                                                Binding="{Binding Title}" 
+                                                Width="*"
+                                                MinWidth="250"
+                                                FontSize="14">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F5F5F5"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Цена -->
+                            <DataGridTextColumn Header="Цена" 
+                                                Binding="{Binding Price, StringFormat='{}{0:N0} ₽'}" 
+                                                Width="120"
+                                                FontSize="14">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F5F5F5"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Дата -->
+                            <DataGridTextColumn Header="Дата" 
+                                                Binding="{Binding PostDate, StringFormat='{}{0:dd.MM.yyyy}'}" 
+                                                Width="120"
+                                                FontSize="14">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F5F5F5"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Foreground" Value="#666666"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Статус -->
+                            <DataGridTextColumn Header="Статус" 
+                                                Binding="{Binding StatusName}" 
+                                                Width="120"
+                                                FontSize="14">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F5F5F5"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="8,4"/>
+                                        <Setter Property="Margin" Value="15,0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding StatusName}" Value="Активно">
+                                                <Setter Property="Background" Value="#4CAF50"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding StatusName}" Value="Завершено">
+                                                <Setter Property="Background" Value="#2196F3"/>
+                                            </DataTrigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Foreground" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Действия -->
+                            <DataGridTemplateColumn Header="Действия" Width="200">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F5F5F5"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                            <!-- Кнопка редактирования -->
+                                            <Button Content="✏️ Редакт." 
+                                                    Tag="{Binding AdId}"
+                                                    Click="EditButton_Click"
+                                                    Margin="0,0,8,0"
+                                                    Padding="12,8"
+                                                    Background="{StaticResource AccentBrush}"
+                                                    Foreground="White"
+                                                    BorderThickness="0"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Cursor="Hand"
+                                                    ToolTip="Редактировать объявление">
+                                                <Button.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="2"/>
+                                                </Button.Effect>
+                                            </Button>
+
+                                            <!-- Кнопка удаления -->
+                                            <Button Content="🗑 Удалить" 
+                                                    Tag="{Binding AdId}"
+                                                    Click="DeleteButton_Click"
+                                                    Margin="0,0,8,0"
+                                                    Padding="12,8"
+                                                    Background="#F44336"
+                                                    Foreground="White"
+                                                    BorderThickness="0"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Cursor="Hand"
+                                                    ToolTip="Удалить объявление">
+                                                <Button.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Opacity="0.2" ShadowDepth="2"/>
+                                                </Button.Effect>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                        <!-- Стиль строк -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="Background" Value="White"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#F9F9F9"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#E3F2FD"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
+
+                    <!-- Сообщение при отсутствии данных (теперь отдельно под DataGrid) -->
+                    <Border Grid.Row="1" 
+                            x:Name="NoDataPanel"
+                            Visibility="Collapsed"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,100,0,0">
+                        <StackPanel>
+                            <TextBlock Text="📭"
+                                       FontSize="48"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,20"/>
+
+                            <TextBlock Text="У вас пока нет объявлений" 
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Нажмите 'Добавить объявление', чтобы создать первое" 
+                                       FontSize="16"
+                                       HorizontalAlignment="Center"
+                                       Foreground="#666666"
+                                       Margin="0,0,0,30"/>
+
+                            <Button Content="➕ Создать первое объявление" 
+                                    Click="AddButton_Click"
+                                    Background="{StaticResource AccentBrush}"
+                                    Foreground="White"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Padding="20,12"
+                                    BorderThickness="0"
+                                    Cursor="Hand"
+                                    HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</Page>

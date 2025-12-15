@@ -1,0 +1,203 @@
+﻿<Page x:Class="AdsService.Pages.AdsListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Сервис частных объявлений">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" 
+                   Text="Частные объявления"
+                   Style="{StaticResource HeaderTextStyle}"
+                   Margin="20,20,20,10"/>
+
+        <!-- Панель пользователя -->
+<Border Grid.Row="1" 
+        Background="{StaticResource AccentBrush}" 
+        Margin="20,0,20,10"
+        Padding="10"
+        CornerRadius="5">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBlock x:Name="UserInfoTextBlock" 
+                   Text="Вы не авторизованы" 
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   Margin="0,0,10,0"
+                   FontWeight="Bold"/>
+        
+        <Button x:Name="MyAdsButton" 
+                   Content="Мои объявления" 
+                   Click="MyAdsButton_Click"
+                   Margin="0,0,10,0"
+                   Visibility="Collapsed"
+                   Background="White"
+                   Foreground="{StaticResource AccentBrush}"/>
+        <Button x:Name="CompletedAdsButton" 
+                Content="Завершённые" 
+                Click="CompletedAdsButton_Click"
+                Margin="0,0,10,0"
+                Visibility="Collapsed"
+                Background="White"
+                Foreground="{StaticResource AccentBrush}"/>
+        <Button x:Name="LoginButton" 
+                Content="Войти / Зарегистрироваться" 
+                Click="LoginButton_Click"
+                Background="White"
+                Foreground="{StaticResource AccentBrush}"/>
+    </StackPanel>
+</Border>
+
+        <!-- Панель поиска и фильтров -->
+        <Border Grid.Row="2" 
+                BorderBrush="{StaticResource SecondaryTextBrush}" 
+                BorderThickness="0,0,0,1" 
+                Margin="20,0,20,20">
+            <StackPanel Margin="0,0,0,20">
+                <!-- Поиск -->
+                <TextBlock Text="Поиск по объявлениям:"/>
+                <TextBox x:Name="SearchTextBox" 
+                         TextChanged="SearchTextBox_TextChanged"
+                         Margin="0,0,0,16">
+                    <TextBox.ToolTip>
+                        <ToolTip>Введите название или описание...</ToolTip>
+                    </TextBox.ToolTip>
+                </TextBox>
+
+                <!-- Фильтры -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Город -->
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="Город:"/>
+                        <ComboBox x:Name="CityComboBox" 
+                                  SelectionChanged="FilterComboBox_SelectionChanged"/>
+                    </StackPanel>
+
+                    <!-- Категория -->
+                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                        <TextBlock Text="Категория:"/>
+                        <ComboBox x:Name="CategoryComboBox" 
+                                  SelectionChanged="FilterComboBox_SelectionChanged"/>
+                    </StackPanel>
+
+                    <!-- Тип -->
+                    <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                        <TextBlock Text="Тип:"/>
+                        <ComboBox x:Name="TypeComboBox" 
+                                  SelectionChanged="FilterComboBox_SelectionChanged"/>
+                    </StackPanel>
+
+                    <!-- Статус -->
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="Статус:"/>
+                        <ComboBox x:Name="StatusComboBox" 
+                                  SelectionChanged="FilterComboBox_SelectionChanged"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Кнопки управления фильтрами -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Button x:Name="ResetButton" 
+                            Content="Сбросить фильтры" 
+                            Click="ResetButton_Click"
+                            Margin="0,0,10,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Список объявлений -->
+        <ScrollViewer Grid.Row="3" Margin="20,0,20,20">
+            <ItemsControl x:Name="AdsItemsControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="{StaticResource SecondaryTextBrush}" 
+                                BorderThickness="0,0,0,1" 
+                                Margin="0,0,0,20" 
+                                Padding="0,0,0,20">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Изображение -->
+                                <Border Grid.Column="0" 
+                                        Width="150" 
+                                        Height="150" 
+                                        Background="#F5F5F5" 
+                                        Margin="0,0,20,0">
+                                    <Image>
+                                        <Image.Source>
+                                            <Binding Path="ImagePath">
+                                                <Binding.FallbackValue>
+                                                    <BitmapImage UriSource="pack://application:,,,/AdsService;component/Resources/image1.png"/>
+                                                </Binding.FallbackValue>
+                                            </Binding>
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+
+                                <!-- Информация об объявлении -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Title}" 
+                                               FontSize="14" 
+                                               FontWeight="Bold"
+                                               Margin="0,0,0,5"/>
+
+                                    <TextBlock Text="{Binding Description}" 
+                                               TextWrapping="Wrap"
+                                               Margin="0,0,0,10"/>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="{Binding Price, StringFormat='Цена: {0:N0} ₽'}"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource AccentBrush}"
+                                                   Margin="0,0,20,0"/>
+
+                                        <TextBlock Grid.Column="1" 
+                                                   Text="{Binding CityName}"
+                                                   Foreground="{StaticResource SecondaryTextBrush}"
+                                                   Margin="0,0,20,0"/>
+
+                                        <TextBlock Grid.Column="2" 
+                                                   Text="{Binding PostDate, StringFormat='Дата: {0:dd.MM.yyyy}'}"
+                                                   Foreground="{StaticResource SecondaryTextBrush}"/>
+                                    </Grid>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <TextBlock Text="{Binding CategoryName}"
+                                                   Margin="0,0,10,0"/>
+                                        <TextBlock Text="•" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding TypeName}"
+                                                   Margin="0,0,10,0"/>
+                                        <TextBlock Text="•" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding StatusName}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

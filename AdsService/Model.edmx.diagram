@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fa7fc90183ec48e9930b5e9dd5c6ef46" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.Ads" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.AdStatuses" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.AdTypes" Width="1.5" PointX="6.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.Categories" Width="1.5" PointX="6.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.Cities" Width="1.5" PointX="2.125" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrivateAdsServiceModel.Users" Width="1.5" PointX="0.875" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="PrivateAdsServiceModel.FK__Ads__CategoryId__09A971A2" ManuallyRouted="false" />
+        <AssociationConnector Association="PrivateAdsServiceModel.FK__Ads__CityId__08B54D69" ManuallyRouted="false" />
+        <AssociationConnector Association="PrivateAdsServiceModel.FK__Ads__StatusId__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="PrivateAdsServiceModel.FK__Ads__TypeId__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="PrivateAdsServiceModel.FK__Ads__UserId__07C12930" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
